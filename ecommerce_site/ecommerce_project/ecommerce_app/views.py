@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render,redirect,get_object_or_404
+from django.http import Http404
 from .models import Customer
 from .models import Product,Category
 from django.contrib import messages
@@ -47,3 +48,15 @@ def search(request):
 def categories(request):
     return render(request, 'categories.html')
 
+def category_products(request, category):
+    try:
+        category_obj = Category.objects.get(name__iexact=category)
+    except Category.DoesNotExist:
+        raise Http404("Category not found")
+
+    products = Product.objects.filter(category=category_obj)
+
+    return render(request, 'category_products.html', {
+        'products': products,
+        'category': category_obj.name,
+    })
