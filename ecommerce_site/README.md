@@ -61,5 +61,5 @@ E-Project/
 │   ├── pyvenv.cfg
 
 ### 🏠 Home Page
-![Home Page](E-Project/screenshots/home.png)
+![Home Page](E-WEBSITE/screenshots/home.png)
 
