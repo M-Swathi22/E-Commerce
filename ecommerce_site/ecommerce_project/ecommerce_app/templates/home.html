@@ -10,7 +10,7 @@
   <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.5);">
     <h1 class="display-4 fw-bold">Welcome to <span style="color: #ffcc00;">Shopfinity</span> 🛍️</h1>
     <p class="fs-5">Discover amazing products, great deals, and fast delivery — all in one place.</p>
- <a href="{% url 'categories' %}" class="btn btn-warning btn-lg fw-semibold mt-3">Explore Categories</a>
+    <a href="{% url 'categories' %}" class="btn btn-warning btn-lg fw-semibold mt-3">Explore Categories</a>
   </div>
 </div>
 
@@ -19,7 +19,7 @@
   <h3 class="mb-4 text-center">🗂️ Shop by Categories</h3>
   <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4">
 
-     Category Card Template 
+    <!-- Category Card Template -->
     {% for category in categories %}
     <div class="col">
       <div class="card text-center border-0 shadow-sm h-100">
