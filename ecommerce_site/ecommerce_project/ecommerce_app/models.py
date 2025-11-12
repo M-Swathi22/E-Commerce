@@ -36,3 +36,10 @@ class Cart(models.Model):
         return f"{self.customer.name} - {self.product.name} - {self.quantity}"
     def total_price(self):
         return self.product.price * self.quantity
+
+class Wishlist(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.customer.name} - {self.product.name}"
