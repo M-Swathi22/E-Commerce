@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import Http404
 from .models import Customer
 from .models import Product,Category,Cart,Wishlist
+from .models import Order, OrderItem
 from django.contrib import messages
 
 def base(request):
@@ -187,3 +188,31 @@ def move_to_cart(request, product_id):
 
     messages.success(request, 'Moved to cart.')
     return redirect('view_cart')  # or redirect('wishlist') if you want to stay there
+
+def confirm_order(request):
+    if 'customer_id' not in request.session:
+        return redirect('login')
+
+    customer_id = request.session['customer_id']
+    customer = Customer.objects.get(id=customer_id)
+
+    cart_items = Cart.objects.filter(customer=customer)
+    if not cart_items.exists():
+        messages.error(request, "Your cart is empty.")
+        return redirect('view_cart')
+
+    total = sum(item.product.price * item.quantity for item in cart_items)
+
+    # ✅ If button is clicked (POST), go to Stripe session
+    if request.method == 'POST':
+        return redirect('create_checkout_session')
+
+    # Optional: Add total price per item to use in template
+    for item in cart_items:
+        item.total_price = item.product.price * item.quantity
+
+    context = {
+        'cart_items': cart_items,
+        'total': total,
+    }
+    return render(request, 'confirm_order.html', context)
